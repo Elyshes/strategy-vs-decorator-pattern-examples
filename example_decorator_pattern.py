@@ -14,7 +14,6 @@ class Decorator(Component):
     def __init__(self, component: Component) -> None:
         self._component = component
 
-    @property
     def component(self) -> Component:
         return self._component
 
@@ -54,5 +53,4 @@ def main():
 
 
 if __name__ == "__main__":
-
     main()
