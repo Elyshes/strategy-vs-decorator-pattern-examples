@@ -90,8 +90,8 @@ def main():
     print_order(moccachino)
 
     coffee = CoffeeBlack()
-    coffee = ExtraMilk(coffee)
     coffee = ExtraSuggar(coffee)
+    coffee = ExtraMilk(coffee)
     print_order(coffee)
 
 
