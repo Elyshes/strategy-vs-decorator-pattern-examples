@@ -1,55 +1,98 @@
-class Component():
-    def operation(self) -> str:
+# base component interface that can be altered by decorators
+class Beverage():
+    def description(self) -> str:
+        pass
+
+    def price(self) -> float:
         pass
 
 
-class ConcreteComponent(Component):
-    def operation(self) -> str:
-        return "ConcreteComponent"
+# concrete component provides default implementation
+class Moccachino(Beverage):
+    def description(self) -> str:
+        return "Moccachino"
+
+    def price(self) -> float:
+        return 2
 
 
-class Decorator(Component):
-    _component: Component = None
+# concrete component provides default implementation
+class LatteMachiato(Beverage):
+    def description(self) -> str:
+        return "Latte Machiato"
 
-    def __init__(self, component: Component) -> None:
+    def price(self) -> float:
+        return 2.3
+
+
+# concrete component provides default implementation
+class CoffeeBlack(Beverage):
+    def description(self) -> str:
+        return "Coffee black"
+
+    def price(self) -> float:
+        return 1.9
+
+
+# base decorator implements the same component interface and
+# defines the wrapping interface for all concrete decorators
+class IngredientsDecorator(Beverage):
+    _component: Beverage = None
+
+    def __init__(self, component: Beverage) -> None:
         self._component = component
 
-    def component(self) -> Component:
+    def component(self) -> Beverage:
         return self._component
 
-    def operation(self) -> str:
-        return self._component.operation()
+    def description(self) -> str:
+        return self._component.description()
+
+    def price(self) -> float:
+        return self._component.price()
 
 
-class ConcreteDecoratorA(Decorator):
-    def operation(self) -> str:
-        return f"ConcreteDecoratorA({self.component.operation()})"
+# concrete decorator
+class ExtraMilk(IngredientsDecorator):
+    def description(self) -> str:
+        return f"{super().description()}, extra milk"
+
+    def price(self) -> float:
+        return super().price() + .4
 
 
-class ConcreteDecoratorB(Decorator):
-    def operation(self) -> str:
-        return f"ConcreteDecoratorB({self.component.operation()})"
+# concrete decorator
+class ExtraSuggar(IngredientsDecorator):
+    def description(self) -> str:
+        return f"{super().description()}, extra suggar"
+
+    def price(self) -> float:
+        return super().price() + .2
 
 
-def print_component(component: Component) -> None:
-    print(f"RESULT: {component.operation()}")
+# concrete decorator
+class ExtraChocolate(IngredientsDecorator):
+    def description(self) -> str:
+        return f"{super().description()}, extra chocolate"
+
+    def price(self) -> float:
+        return super().price() + .5
+
+
+def print_order(component: Beverage) -> None:
+    print(
+        f"\nYOUR ORDER: {component.description()}\nTOTAL COST: {component.price()} Euro\n")
 
 
 def main():
-    simple_component = ConcreteComponent()
-    decorator1 = ConcreteDecoratorA(simple_component)
-    decorator2 = ConcreteDecoratorB(decorator1)
-    decorator3 = ConcreteDecoratorA(decorator2)
+    moccachino = Moccachino()
+    moccachino = ExtraMilk(moccachino)
+    print_order(moccachino)
 
-    print("\nClient: I've got a simple component:")
-    print_component(simple_component)
-    print()
-
-    #print("Client: Now I've got a decorated component:")
-    # print_component(decorator1)
-    # print_component(decorator2)
-    # print_component(decorator3)
-    print()
+    coffee = CoffeeBlack()
+    coffee = ExtraMilk(coffee)
+    coffee = ExtraSuggar(coffee)
+    print_order(coffee)
 
 
 if __name__ == "__main__":
