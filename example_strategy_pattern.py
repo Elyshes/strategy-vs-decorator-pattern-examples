@@ -36,7 +36,7 @@ class Context():
         # ...
 
         print("Context: Sortiert Daten in dem es die Strategien nutzt.")
-        result = self.strategy.do_algorithm(["d", "e", "a", "c", "b"])
+        result = self.strategy.execute_sort(["d", "e", "a", "c", "b"])
         print(",".join(result))
 
         # ...
@@ -51,7 +51,7 @@ class Strategy(ABC):
     """
 
     @abstractmethod
-    def do_algorithm(self, data: List):
+    def execute_sort(self, data: List):
         pass
 
 
@@ -62,12 +62,12 @@ Strategie folgen. Das Interface macht alle Strategien austauschbar.
 
 
 class normalSort(Strategy):
-    def do_algorithm(self, data: List) -> List:
+    def execute_sort(self, data: List) -> List:
         return sorted(data)
 
 
 class reverseSort(Strategy):
-    def do_algorithm(self, data: List) -> List:
+    def execute_sort(self, data: List) -> List:
         return reversed(sorted(data))
 
 
