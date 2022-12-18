@@ -77,11 +77,11 @@ def main():
     den richtigen Algorithmus zu wählen.
     """
     context = Context(normalSort())
-    print("Client: Strategy is set to normal sorting.")
+    print("Client: Strategy ist auf normalSort gesetzt.")
     context.sortList()
     print()
 
-    print("Client: Strategy is set to reverse sorting.")
+    print("Client: Strategy ist auf reverseSort gesetzt.")
     context.setStrategy(reverseSort())
     context.sortList()
 
