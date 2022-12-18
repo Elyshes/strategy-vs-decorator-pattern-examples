@@ -36,7 +36,7 @@ class Context():
         # ...
 
         print("Context: Sortiert Daten in dem es die Strategien nutzt.")
-        result = self.strategy.do_algorithm(["d", "e", "a", "c", "b"])
+        result = self.strategy.execute_sort(["d", "e", "a", "c", "b"])
         print(",".join(result))
 
         # ...
@@ -45,13 +45,13 @@ class Context():
 class Strategy(ABC):
     """
     Das Strategy Interface (hier: Abstrakte Klasse) deklariert Operationen die alle
-    Aslgorithmen gemeinsam haben.
+    Algorithmen gemeinsam haben.
 
     Der Context nutzt dieses Interface um die Algortihmen aufzurufen.
     """
 
     @abstractmethod
-    def do_algorithm(self, data: List):
+    def execute_sort(self, data: List):
         pass
 
 
@@ -61,28 +61,30 @@ Strategie folgen. Das Interface macht alle Strategien austauschbar.
 """
 
 
-class ConcreteStrategyA(Strategy):
-    def do_algorithm(self, data: List) -> List:
+class normalSort(Strategy):
+    def execute_sort(self, data: List) -> List:
         return sorted(data)
 
 
-class ConcreteStrategyB(Strategy):
-    def do_algorithm(self, data: List) -> List:
+class reverseSort(Strategy):
+    def execute_sort(self, data: List) -> List:
         return reversed(sorted(data))
 
-
-if __name__ == "__main__":
+def main():
     """
     Der Client wählt die konkrete Strategie und übergibt sie dem Kontext. 
     Der Client sollte dem Unterschied zwischen den Strategien kennen, um
     den richtigen Algorithmus zu wählen.
     """
-    
-    context = Context(ConcreteStrategyA())
-    print("Client: Strategy is set to normal sorting.")
+    context = Context(normalSort())
+    print("Client: Strategy ist auf normalSort gesetzt.")
     context.sortList()
     print()
 
-    print("Client: Strategy is set to reverse sorting.")
-    context.setStrategy(ConcreteStrategyB())
+    print("Client: Strategy ist auf reverseSort gesetzt.")
+    context.setStrategy(reverseSort())
     context.sortList()
+
+
+if __name__ == "__main__":
+    main()
