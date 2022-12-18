@@ -4,28 +4,61 @@ from typing import List
 
 
 class Context():
+    """
+    Der Kontext definiert das Interface für Clients.
+    """
+
+    strategy: Strategy
+
 
     def __init__(self, strategy: Strategy) -> None:
-        self._strategy = strategy
+        """
+        Konstruktor akzeptiert Strategie die der Kontext am anfang benutzt
+        """
 
-    @property
-    def strategy(self) -> Strategy:
-        return self._strategy
+        self.strategy = strategy
 
-    @strategy.setter
-    def strategy(self, strategy: Strategy) -> None:
-        self._strategy = strategy
+    def setStrategy(self, strategy: Strategy) -> None:
+        """
+        Setter Methode um die Strategie währen der Laufzeit zu ändern.
+        """
 
-    def do_some_business_logic(self) -> None:
-        print("Context: Sorting data using the strategy (not sure how it'll do it)")
-        result = self._strategy.do_algorithm(["a", "b", "c", "d", "e"])
+        self.strategy = strategy
+
+    def sortList(self) -> None:
+        """
+        Der Kontext gibt arbeit an die Strategien weiter anstatt mehrere Versionen 
+        des ähnlichen Algorithmus selbst zu implementieren.
+
+        Er weiß dabei nicht welche Strategie bnutzt wird.
+        """
+
+        # ...
+
+        print("Context: Sortiert Daten in dem es die Strategien nutzt.")
+        result = self.strategy.do_algorithm(["d", "e", "a", "c", "b"])
         print(",".join(result))
+
+        # ...
 
 
 class Strategy(ABC):
+    """
+    Das Strategy Interface (hier: Abstrakte Klasse) deklariert Operationen die alle
+    Aslgorithmen gemeinsam haben.
+
+    Der Context nutzt dieses Interface um die Algortihmen aufzurufen.
+    """
+
     @abstractmethod
     def do_algorithm(self, data: List):
         pass
+
+
+"""
+Die Konkreten Strategien implementieren die Algorithmen, während sie der Basis
+Strategie folgen. Das Interface macht alle Strategien austauschbar.
+"""
 
 
 class ConcreteStrategyA(Strategy):
@@ -39,15 +72,17 @@ class ConcreteStrategyB(Strategy):
 
 
 if __name__ == "__main__":
-    # The client code picks a concrete strategy and passes it to the context.
-    # The client should be aware of the differences between strategies in order
-    # to make the right choice.
-
+    """
+    Der Client wählt die konkrete Strategie und übergibt sie dem Kontext. 
+    Der Client sollte dem Unterschied zwischen den Strategien kennen, um
+    den richtigen Algorithmus zu wählen.
+    """
+    
     context = Context(ConcreteStrategyA())
     print("Client: Strategy is set to normal sorting.")
-    context.do_some_business_logic()
+    context.sortList()
     print()
 
     print("Client: Strategy is set to reverse sorting.")
-    context.strategy = ConcreteStrategyB()
-    context.do_some_business_logic()
+    context.setStrategy(ConcreteStrategyB())
+    context.sortList()
