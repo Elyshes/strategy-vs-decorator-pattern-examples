@@ -71,6 +71,11 @@ class reverseSort(Strategy):
         return reversed(sorted(data))
 
 def main():
+    """
+    Der Client wählt die konkrete Strategie und übergibt sie dem Kontext. 
+    Der Client sollte dem Unterschied zwischen den Strategien kennen, um
+    den richtigen Algorithmus zu wählen.
+    """
     context = Context(normalSort())
     print("Client: Strategy is set to normal sorting.")
     context.sortList()
@@ -82,9 +87,4 @@ def main():
 
 
 if __name__ == "__main__":
-    """
-    Der Client wählt die konkrete Strategie und übergibt sie dem Kontext. 
-    Der Client sollte dem Unterschied zwischen den Strategien kennen, um
-    den richtigen Algorithmus zu wählen.
-    """
     main()
