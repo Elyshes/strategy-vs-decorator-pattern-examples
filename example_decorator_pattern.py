@@ -8,7 +8,7 @@ class Beverage():
 
 
 # concrete component provides default implementation
-class Moccachino(Beverage):
+class Mochaccino(Beverage):
     def description(self) -> str:
         return "Moccachino"
 
@@ -36,7 +36,7 @@ class CoffeeBlack(Beverage):
 
 # base decorator implements the same component interface and
 # defines the wrapping interface for all concrete decorators
-class IngredientsDecorator(Beverage):
+class IngredientDecorator(Beverage):
     _component: Beverage = None
 
     def __init__(self, component: Beverage) -> None:
@@ -53,7 +53,7 @@ class IngredientsDecorator(Beverage):
 
 
 # concrete decorator
-class ExtraMilk(IngredientsDecorator):
+class ExtraMilk(IngredientDecorator):
     def description(self) -> str:
         return f"{super().description()}, extra milk"
 
@@ -62,7 +62,7 @@ class ExtraMilk(IngredientsDecorator):
 
 
 # concrete decorator
-class ExtraSuggar(IngredientsDecorator):
+class ExtraSuggar(IngredientDecorator):
     def description(self) -> str:
         return f"{super().description()}, extra suggar"
 
@@ -71,7 +71,7 @@ class ExtraSuggar(IngredientsDecorator):
 
 
 # concrete decorator
-class ExtraChocolate(IngredientsDecorator):
+class ExtraChocolate(IngredientDecorator):
     def description(self) -> str:
         return f"{super().description()}, extra chocolate"
 
@@ -85,9 +85,9 @@ def print_order(component: Beverage) -> None:
 
 
 def main():
-    moccachino = Moccachino()
-    moccachino = ExtraMilk(moccachino)
-    print_order(moccachino)
+    mochaccino = Mochaccino()
+    mochaccino = ExtraMilk(mochaccino)
+    print_order(mochaccino)
 
     coffee = CoffeeBlack()
     coffee = ExtraSuggar(coffee)
