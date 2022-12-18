@@ -70,14 +70,7 @@ class reverseSort(Strategy):
     def execute_sort(self, data: List) -> List:
         return reversed(sorted(data))
 
-
-if __name__ == "__main__":
-    """
-    Der Client wählt die konkrete Strategie und übergibt sie dem Kontext. 
-    Der Client sollte dem Unterschied zwischen den Strategien kennen, um
-    den richtigen Algorithmus zu wählen.
-    """
-    
+def main():
     context = Context(normalSort())
     print("Client: Strategy is set to normal sorting.")
     context.sortList()
@@ -86,3 +79,12 @@ if __name__ == "__main__":
     print("Client: Strategy is set to reverse sorting.")
     context.setStrategy(reverseSort())
     context.sortList()
+
+
+if __name__ == "__main__":
+    """
+    Der Client wählt die konkrete Strategie und übergibt sie dem Kontext. 
+    Der Client sollte dem Unterschied zwischen den Strategien kennen, um
+    den richtigen Algorithmus zu wählen.
+    """
+    main()
