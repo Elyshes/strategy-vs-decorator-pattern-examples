@@ -17,7 +17,7 @@ class Mochaccino(Beverage):
 
 
 # concrete component provides default implementation
-class LatteMachiato(Beverage):
+class LatteMacchiato(Beverage):
     def description(self) -> str:
         return "Latte Machiato"
 
